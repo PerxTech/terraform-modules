@@ -32,6 +32,8 @@ resource "aws_iam_role" "api_gateway_to_lambda" {
       ] 
     }
   EOF
+
+  tags = var.tags
 }
 
 resource "aws_iam_role_policy" "api_gateway_to_lambda" {

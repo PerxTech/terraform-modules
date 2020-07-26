@@ -21,4 +21,6 @@ resource "aws_lambda_function" "api" {
   environment {
     variables = var.environment_variables
   }
+
+  tags = var.tags
 }

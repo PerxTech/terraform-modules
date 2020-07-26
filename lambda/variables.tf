@@ -42,3 +42,8 @@ variable "handler" {
   type    = string
   default = "main.handler"
 }
+
+variable "tags" {
+  type    = map(string)
+  default = {}
+}
