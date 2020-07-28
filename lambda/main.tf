@@ -12,6 +12,7 @@ resource "aws_lambda_function" "api" {
   filename         = data.archive_file.api.output_path
   source_code_hash = data.archive_file.api.output_base64sha256
   memory_size      = var.memory_size
+  timeout          = var.timeout
 
   vpc_config {
     subnet_ids         = var.subnet_ids

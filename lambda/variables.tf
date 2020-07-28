@@ -47,3 +47,8 @@ variable "tags" {
   type    = map(string)
   default = {}
 }
+
+variable "timeout" {
+  type    = number
+  default = 3
+}
