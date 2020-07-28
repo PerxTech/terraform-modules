@@ -2,10 +2,11 @@ data "aws_region" "current" {}
 
 # arn:aws:apigateway:us-west-2:lambda:path/2015-03-31/functions/arn:aws:lambda:us-west-2:012345678912:function:my-function/invocations
 resource "aws_api_gateway_authorizer" "authorizer" {
-  name                   = "admin-auth"
-  rest_api_id            = var.rest_api_id
-  authorizer_uri         = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${var.lambda_arn}/invocations"
-  authorizer_credentials = aws_iam_role.authorizer_invoke.arn
+  name                             = "admin-auth"
+  rest_api_id                      = var.rest_api_id
+  authorizer_uri                   = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${var.lambda_arn}/invocations"
+  authorizer_credentials           = aws_iam_role.authorizer_invoke.arn
+  authorizer_result_ttl_in_seconds = 0
 }
 
 resource "aws_iam_role" "authorizer_invoke" {
