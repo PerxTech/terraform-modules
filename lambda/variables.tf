@@ -2,15 +2,9 @@ variable "source_dir" {
   type = string
 }
 
-variable "role_arn" {
-  type = string
-}
-
 variable "environment_variables" {
-  type = map(string)
-  default = {
-    foo = "bar"
-  }
+  type    = map(string)
+  default = null
 }
 
 variable "security_group_ids" {
@@ -51,4 +45,9 @@ variable "tags" {
 variable "timeout" {
   type    = number
   default = 3
+}
+
+variable "enable" {
+  type    = bool
+  default = true
 }
