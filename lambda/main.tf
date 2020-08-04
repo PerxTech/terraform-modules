@@ -6,7 +6,7 @@ data "archive_file" "api" {
 
 locals {
   environments = var.environment_variables != null ? [var.environment_variables] : []
-  name         = var.function_name != "" ? var.function_name : basename(var.source_dir)
+  name         = var.function_name != "" ? var.function_name : (length(basename(var.source_dir)) <= 32 ? basename(var.source_dir) : substr(replace(replace(replace(replace(replace(basename(var.source_dir), "u", ""), "o", ""), "i", ""), "e", ""), "a", ""), 0, 32))
 }
 
 resource "aws_lambda_function" "api" {
@@ -64,20 +64,3 @@ resource "aws_iam_role_policy_attachment" "basic" {
   role       = aws_iam_role.role[0].name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
-
-# resource "aws_iam_role_policy" "kms" {
-#   role        = aws_iam_role.role.name
-#   name_prefix = "kms_"
-#   policy      = <<-EOF
-#     {
-#        "Version": "2012-10-17",
-#       "Statement": [
-#         {
-#           "Effect": "Allow",
-#           "Action": "kms:*",
-#           "Resource":"*"
-#         }
-#       ]
-#     }
-#   EOF
-# }
