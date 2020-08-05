@@ -6,7 +6,7 @@ resource "aws_api_gateway_authorizer" "authorizer" {
   rest_api_id                      = var.rest_api_id
   authorizer_uri                   = "arn:aws:apigateway:${data.aws_region.current.name}:lambda:path/2015-03-31/functions/${var.lambda_arn}/invocations"
   authorizer_credentials           = aws_iam_role.authorizer_invoke.arn
-  authorizer_result_ttl_in_seconds = 0
+  authorizer_result_ttl_in_seconds = var.ttl_in_seconds
 }
 
 resource "aws_iam_role" "authorizer_invoke" {
