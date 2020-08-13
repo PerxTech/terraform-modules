@@ -9,3 +9,7 @@ output "name" {
 output "role_name" {
   value = var.enable ? aws_iam_role.role[0].name : null
 }
+
+output "role_id" {
+  value = var.enable ? aws_iam_role.role[0].id : null
+}
