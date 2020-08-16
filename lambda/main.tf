@@ -9,10 +9,15 @@ locals {
   name         = var.function_name != "" ? var.function_name : (length(basename(var.source_dir)) <= 32 ? basename(var.source_dir) : substr(replace(replace(replace(replace(replace(basename(var.source_dir), "u", ""), "o", ""), "i", ""), "e", ""), "a", ""), 0, 32))
 }
 
+resource "random_string" "suffix" {
+  length  = 4
+  special = false
+}
+
 resource "aws_lambda_function" "api" {
   count            = var.enable ? 1 : 0
   runtime          = var.runtime
-  function_name    = local.name
+  function_name    = "${substr(local.name, 0, 28)}${random_string.suffix.result}"
   handler          = var.handler
   role             = aws_iam_role.role[0].arn
   filename         = data.archive_file.api.output_path
