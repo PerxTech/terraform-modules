@@ -10,6 +10,7 @@ locals {
 }
 
 resource "random_string" "suffix" {
+  count   = var.use_unique_suffix ? 1 : 0
   length  = 4
   special = false
 }
@@ -17,7 +18,7 @@ resource "random_string" "suffix" {
 resource "aws_lambda_function" "api" {
   count            = var.enable ? 1 : 0
   runtime          = var.runtime
-  function_name    = "${substr(local.name, 0, 28)}${random_string.suffix.result}"
+  function_name    = var.use_unique_suffix ? "${substr(local.name, 0, 28)}${random_string.suffix[0].result}" : local.name
   handler          = var.handler
   role             = aws_iam_role.role[0].arn
   filename         = data.archive_file.api.output_path

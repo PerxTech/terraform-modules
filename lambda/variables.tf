@@ -51,3 +51,8 @@ variable "enable" {
   type    = bool
   default = true
 }
+
+variable "use_unique_suffix" {
+  type    = bool
+  default = true
+}
