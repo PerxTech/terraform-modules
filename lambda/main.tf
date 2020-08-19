@@ -70,3 +70,9 @@ resource "aws_iam_role_policy_attachment" "basic" {
   role       = aws_iam_role.role[0].name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 }
+
+resource "aws_iam_role_policy_attachment" "vpc" {
+  count      = var.enable && length(var.subnet_ids) > 0 ? 1 : 0
+  role       = aws_iam_role.role[0].name
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
+}
