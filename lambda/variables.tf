@@ -56,3 +56,8 @@ variable "use_unique_suffix" {
   type    = bool
   default = true
 }
+
+variable "alarm_sns_topic" {
+  type    = string
+  default = null
+}

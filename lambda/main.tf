@@ -76,3 +76,25 @@ resource "aws_iam_role_policy_attachment" "vpc" {
   role       = aws_iam_role.role[0].name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole"
 }
+
+resource "aws_cloudwatch_metric_alarm" "alarm" {
+  alarm_name = "${aws_lambda_function.api.function_name}-errors"
+  comparison_operator = "GreaterThanThreshold"
+  evaluation_periods = 1
+  threshold = 0
+  treat_missing_data = "notBreaching"
+  datapoints_to_alarm = 1
+  dimensions = {
+    "FunctionName" = aws_lambda_function.api.function_name
+  }
+  namespace = "AWS/Lambda"
+  period = 300
+  statistic = "Sum"
+  ok_actions = []
+  insufficient_data_actions = [] 
+  alarm_actions = [
+    var.alarm_sns_topic
+  ]
+  metric_name = "Errors"
+  tags = var.tags
+}
