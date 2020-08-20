@@ -93,9 +93,7 @@ resource "aws_cloudwatch_metric_alarm" "alarm" {
   statistic = "Sum"
   ok_actions = []
   insufficient_data_actions = [] 
-  alarm_actions = [
-    var.alarm_sns_topic
-  ]
+  alarm_actions = var.alarm_sns_topic != null ? [ var.alarm_sns_topic ] : []
   metric_name = "Errors"
   tags = var.tags
 }
