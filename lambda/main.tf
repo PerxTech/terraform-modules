@@ -78,14 +78,15 @@ resource "aws_iam_role_policy_attachment" "vpc" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "alarm" {
-  alarm_name = "${aws_lambda_function.api.function_name}-errors"
+  count = var.enable ? 0 : 1
+  alarm_name = "${aws_lambda_function.api[0].function_name}-errors"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods = 1
   threshold = 0
   treat_missing_data = "notBreaching"
   datapoints_to_alarm = 1
   dimensions = {
-    "FunctionName" = aws_lambda_function.api.function_name
+    "FunctionName" = aws_lambda_function.api[0].function_name
   }
   namespace = "AWS/Lambda"
   period = 300
