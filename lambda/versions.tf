@@ -1,8 +1,11 @@
 
 terraform {
-  required_version = ">= 0.12"
-}
+  required_version = ">= 0.13"
 
-provider "archive" {
-  version = "~> 1.3"
+  required_providers {
+    archive = {
+      source  = "hashicorp/archive"
+      version = ">= 2.0"
+    }
+  }
 }
