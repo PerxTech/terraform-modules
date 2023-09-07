@@ -24,7 +24,7 @@ variable "function_name" {
 
 variable "runtime" {
   type    = string
-  default = "nodejs12.x"
+  default = "nodejs16.x"
 }
 
 variable "memory_size" {
